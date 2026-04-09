@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # อนุญาตให้กดปุ่ม Build เองได้
+  workflow_dispatch: 
 
 jobs:
   build-windows-exe:
@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # <-- อัปเดตเป็น v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # <-- อัปเดตเป็น v5
       with:
         python-version: '3.10'
 
@@ -26,12 +26,10 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        # --noconsole เพื่อซ่อนหน้าต่าง cmd สีดำเวลารัน
-        # --onefile เพื่อให้ได้ exe ไฟล์เดียวจบ
         pyinstaller --noconsole --onefile main.py
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # <-- แก้ไขตัวต้นเหตุเป็น v4
       with:
         name: DeploymentTool_Release
         path: dist/main.exe
